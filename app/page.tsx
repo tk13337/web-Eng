@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { supabase } from "./supabase";
 import { ThemeToggle } from "./theme-toggle";
 
 function formatTime(totalSeconds: number) {
@@ -46,19 +47,40 @@ export default function Home() {
     setStatus("Pausiert");
   }
 
-  function saveEntry() {
-    if (seconds === 0) {
-      alert("Bitte zuerst Zeit erfassen.");
-      return;
-    }
-
-    setEntries([[project, task, time.slice(0, 5), "Gebucht"], ...entries]);
-    setSeconds(0);
-    setRunning(false);
-    setStatus("Inaktiv");
-    setNote("");
-    alert("Eintrag gespeichert.");
+  async function saveEntry() {
+  if (seconds === 0) {
+    alert("Bitte zuerst Zeit erfassen.");
+    return;
   }
+
+  const newEntry = {
+  project: "TEST",
+  task: "TEST TASK",
+  time: "00:00:05",
+  status: "Gebucht",
+};
+
+  const { error } = await supabase
+    .from("entries")
+    .insert([newEntry]);
+console.log("Supabase Error:", error);
+  if (error) {
+    console.error(error);
+    alert("Fehler beim Speichern.");
+    return;
+  }
+
+  setEntries([[project, task, time, "Gebucht"], ...entries]);
+
+  setSeconds(0);
+  setRunning(false);
+  setStatus("Inaktiv");
+  setNote("");
+
+  alert("Eintrag erfolgreich gespeichert.");
+}
+
+   
 
   function stopAndSaveEntry() {
     if (seconds === 0) {
@@ -72,7 +94,17 @@ export default function Home() {
     setStatus("Inaktiv");
     alert("Zeit wurde gespeichert.");
   }
+  useEffect(() => {
+    const savedEntries = localStorage.getItem("entries");
 
+    if (savedEntries) {
+      setEntries(JSON.parse(savedEntries));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("entries", JSON.stringify(entries));
+  }, [entries]);
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -161,7 +193,19 @@ export default function Home() {
                 <p className="eyebrow">Kernfunktion</p>
                 <h3>Timer & Schnellbuchung</h3>
               </div>
-              <span className="status-pill">{status}</span>
+              <span
+                className="status-pill"
+                style={{
+                  color:
+                    status === "Aktiv"
+                      ? "#3ddc97"
+                      : status === "Pausiert"
+                        ? "#ffb648"
+                        : "#97a3c4",
+                }}
+              >
+                {status}
+              </span>
             </div>
 
             <div className="timer-display">
@@ -304,8 +348,8 @@ export default function Home() {
                           entry[3] === "Entwurf"
                             ? "table-badge table-badge--muted"
                             : entry[3] === "Prüfen"
-                            ? "table-badge table-badge--warning"
-                            : "table-badge"
+                              ? "table-badge table-badge--warning"
+                              : "table-badge"
                         }>
                           {entry[3]}
                         </span>
