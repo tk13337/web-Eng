@@ -94,13 +94,6 @@ export default function Home() {
           <a className="nav__item" href="#billing">Abrechnung</a>
           <a className="nav__item" href="#settings">Einstellungen</a>
         </nav>
-
-        <section className="sidebar-card">
-          <p className="sidebar-card__label">Testphase</p>
-          <h2>14 Tage kostenlos</h2>
-          <p>Später kann hier eine Conversion-Box platziert werden.</p>
-          <button className="button button--primary">Trial starten</button>
-        </section>
       </aside>
 
       <main className="main-content" id="overview">
