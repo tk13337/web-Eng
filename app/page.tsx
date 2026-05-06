@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ThemeToggle } from "./theme-toggle";
 
 function formatTime(totalSeconds: number) {
   const h = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
@@ -116,6 +117,7 @@ export default function Home() {
             </label>
             <button className="button button--ghost">Export</button>
             <button className="button button--primary">+ Zeit erfassen</button>
+            <ThemeToggle />
             <div className="avatar">LK</div>
           </div>
         </header>

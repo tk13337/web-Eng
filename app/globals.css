@@ -1,4 +1,26 @@
 :root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --bg-soft: rgba(245, 245, 250, 0.72);
+  --panel: rgba(255, 255, 255, 0.78);
+  --panel-border: rgba(0, 0, 0, 0.08);
+  --text: #1a1a2e;
+  --muted: #6b7280;
+  --primary: #6d7cff;
+  --primary-2: #52d6ff;
+  --success: #3ddc97;
+  --warning: #ffb648;
+  --danger: #ff7d7d;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --max-width: 1600px;
+}
+
+html.dark {
+  color-scheme: dark;
   --bg: #081120;
   --bg-soft: rgba(17, 28, 48, 0.72);
   --panel: rgba(15, 23, 42, 0.78);
@@ -11,11 +33,6 @@
   --warning: #ffb648;
   --danger: #ff7d7d;
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
-  --radius-xl: 28px;
-  --radius-lg: 22px;
-  --radius-md: 16px;
-  --radius-sm: 12px;
-  --max-width: 1600px;
 }
 
 * {
@@ -32,6 +49,14 @@ body {
 body {
   font-family: "Inter", system-ui, sans-serif;
   color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(109, 124, 255, 0.08), transparent 28%),
+    radial-gradient(circle at top right, rgba(82, 214, 255, 0.06), transparent 24%),
+    linear-gradient(135deg, #fafafe 0%, #f5f5f9 48%, #ffffff 100%);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark body {
   background:
     radial-gradient(circle at top left, rgba(109, 124, 255, 0.28), transparent 28%),
     radial-gradient(circle at top right, rgba(82, 214, 255, 0.22), transparent 24%),
