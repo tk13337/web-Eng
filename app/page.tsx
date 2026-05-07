@@ -111,8 +111,8 @@ console.log("Supabase Error:", error);
         <div className="brand">
           <div className="brand__logo">SD</div>
           <div className="brand__text">
-            <p className="eyebrow">SaaS Prototype</p>
-            <h1>Stundendashboard</h1>
+            
+            <h1>Dashboard</h1>
           </div>
         </div>
 
